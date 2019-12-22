@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans|Lato|Montserrat&display=swap');
+
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~@nebular/theme/styles/globals';
+
+/*
+ * Panel Styles
+ */
+nb-card-header {
+  font-family: 'Montserrat', sans-serif !important;
+  display: flex;
+  align-items: center;
+  font-size: 22px !important;
+}
+
+@media(max-width: 576px) {
+  figure.title {
+    padding: 20px !important;
+  }
+
+  .logo-auth {
+    width: 275px !important;
+    height: auto;
+  }
+}
+
+@media(max-width: 768px) {
+  nb-card-header {
+    font-size: 20px !important;
+  }
+}

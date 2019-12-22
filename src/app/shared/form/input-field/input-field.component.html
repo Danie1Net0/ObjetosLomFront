@@ -1,0 +1,6 @@
+<div class="form-control-group form-group">
+  <label class="label" [attr.for]="id">{{ label }}:</label>
+  <input nbInput autofocus fullWidth [shape]="shape" [status]="status" [fieldSize]="fieldSize" [id]="id" class="first" [ngClass]="cssClass" class="form-control"
+         [placeholder]="placeholder" [type]="type" [min]="min" [max]="max" [readOnly]="!!isReadOnly" [(ngModel)]="innerValue">
+  <app-error-message [control]="control" [fieldName]="controlName"></app-error-message>
+</div>

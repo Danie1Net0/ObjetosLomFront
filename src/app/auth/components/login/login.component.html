@@ -1,0 +1,29 @@
+<figure class="title">
+  <img alt="Logo Grupo Pessoa" src="../../../../assets/images/logo.png" class="logo-auth">
+</figure>
+
+<nb-alert (close)="onClose()" *ngIf="message$ | async as message" [accent]="message.type" closable>
+  {{ message.content }}
+</nb-alert>
+
+<form (ngSubmit)="login()" [formGroup]="formGroup" aria-labelledby="title">
+  <app-input-field [control]="formGroup.get('email')" [cssClass]="verifyValidField('email')" controlName="E-mail" formControlName="email" id="email" label="E-mail" placeholder="Seu e-mail" type="email"></app-input-field>
+  <app-input-field [control]="formGroup.get('password')" [cssClass]="verifyValidField('password')" controlName="Senha" formControlName="password" id="password" label="Senha" placeholder="Sua senha" type="password"></app-input-field>
+
+  <div class="form-control-group accept-group">
+    <nb-checkbox *ngIf="rememberMe" formControlName="rememberMe">Lembre-me</nb-checkbox>
+    <a class="forgot-password" routerLink="../recuperar-senha">Esqueceu sua senha?</a>
+  </div>
+
+  <button [class.btn-pulse]="formGroup.valid" size="large" [disabled]="formGroup.invalid || (loading$ | async)" fullWidth nbButton status="success">
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border text-light" role="status" *ngIf="loading$ | async else buttonContent">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <ng-template #buttonContent>
+      Entrar
+    </ng-template>
+  </button>
+</form>

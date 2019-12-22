@@ -1,0 +1,50 @@
+nb-action {
+  height: auto;
+  display: flex;
+  align-content: center;
+}
+
+nb-user {
+  cursor: pointer;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  width: auto;
+
+  .sidebar-toggle {
+    border: none;
+    background-color: transparent;
+    color: #8F9BB3;
+    padding-right: 1.25rem;
+    text-decoration: none;
+    cursor: pointer;
+    nb-icon {
+      font-size: 1.75rem;
+    }
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border-left: 1px solid #EDF1F7;
+    padding: 0 1.25rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #015C00;
+  }
+}
+
+@media(max-width: 575.98px) {
+  .control-item {
+    display: none;
+  }
+
+  .user-action {
+    border: none;
+    padding: 0;
+  }
+}

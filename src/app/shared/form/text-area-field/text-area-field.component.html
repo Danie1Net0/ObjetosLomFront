@@ -1,0 +1,5 @@
+<div class="form-control-group form-group">
+  <label class="label" [attr.for]="id">{{ label }}:</label>
+  <textarea nbInput fullWidth [status]="status" [shape]="shape" [id]="id" class="form-control" [cols]="cols" [rows]="rows" [ngClass]="cssClass" [placeholder]="placeholder" [readOnly]="!!isReadOnly" [(ngModel)]="innerValue"></textarea>
+  <app-error-message [control]="control" [fieldName]="controlName"></app-error-message>
+</div>
