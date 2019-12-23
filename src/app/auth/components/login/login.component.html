@@ -1,5 +1,5 @@
 <figure class="title">
-  <img alt="Logo Grupo Pessoa" src="../../../../assets/images/logo.png" class="logo-auth">
+  <img alt="Logo IFSP" src="../../../../assets/images/logo.png" class="logo-auth">
 </figure>
 
 <nb-alert (close)="onClose()" *ngIf="message$ | async as message" [accent]="message.type" closable>
@@ -26,4 +26,8 @@
       Entrar
     </ng-template>
   </button>
+
+  <section class="another-action" aria-label="Register">
+    Não tem uma conta? <a class="text-link" routerLink="../registrar">Cadastrar</a>
+  </section>
 </form>

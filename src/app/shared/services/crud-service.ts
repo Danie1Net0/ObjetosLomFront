@@ -7,12 +7,14 @@ export class CrudService<T> {
   protected httpOptions: any;
 
   constructor(protected httpClient: HttpClient, protected API_URL, protected token) {
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        Authorization: `Bearer ${ token.value }`
-      })
-    };
+    if (token !== '') {
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          Authorization: `Bearer ${ token.value }`
+        })
+      };
+    }
   }
 
   public index(): Observable<any> {

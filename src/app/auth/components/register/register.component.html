@@ -1,0 +1,63 @@
+<figure class="title">
+  <img alt="Logo IFSP" class="logo-auth" src="../../../../assets/images/logo.png">
+</figure>
+
+<nb-alert (close)="onClose()" *ngIf="message$ | async as message" [accent]="message.type" closable>
+  {{ message.content }}
+</nb-alert>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="formGroup" aria-labelledby="title">
+  <div class="row">
+    <div class="col-md-12 col-lg-6">
+      <app-input-field [control]="formGroup.get('name')" [cssClass]="verifyValidField('name')" controlName="Nome"
+                       formControlName="name" id="name" label="Nome" placeholder="Nome"></app-input-field>
+    </div>
+
+    <div class="col-md-12 col-lg-6">
+      <app-input-field [control]="formGroup.get('lastName')" [cssClass]="verifyValidField('lastName')"
+                       controlName="Sobrenome" formControlName="lastName" id="lastName" label="Sobrenome"
+                       placeholder="Sobrenome"></app-input-field>
+    </div>
+  </div>
+
+  <app-input-field [control]="formGroup.get('institution')" [cssClass]="verifyValidField('institution')"
+                   controlName="Instituição de Ensino" formControlName="institution" id="institution"
+                   label="Instituição de Ensino" placeholder="Instituição de Ensino"></app-input-field>
+
+  <app-input-field [control]="formGroup.get('email')" [cssClass]="verifyValidField('email')" controlName="E-mail"
+                   formControlName="email" id="email" label="E-mail" placeholder="Seu e-mail"
+                   type="email"></app-input-field>
+
+  <div class="row">
+    <div class="col-md-12 col-lg-6">
+      <app-input-field [control]="formGroup.get('password')" [cssClass]="verifyValidField('password')"
+                       controlName="Senha" formControlName="password" id="password" label="Senha" placeholder="Senha"
+                       type="password"></app-input-field>
+    </div>
+
+    <div class="col-md-12 col-lg-6">
+      <app-input-field [control]="formGroup.get('password_confirmation')"
+                       [cssClass]="verifyValidField('password_confirmation')" controlName="Confirme a Senha"
+                       formControlName="password_confirmation" id="password_confirmation" label="Confirme a Senha"
+                       placeholder="Confirme a senha" type="password"></app-input-field>
+    </div>
+  </div>
+
+  <button [class.btn-pulse]="formGroup.valid" [disabled]="formGroup.invalid || (loading$ | async)" fullWidth nbButton
+          size="large" status="success">
+    <div class="d-flex justify-content-center">
+      <div *ngIf="loading$ | async else buttonContent" class="spinner-border text-light" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <ng-template #buttonContent>
+      Cadastrar
+    </ng-template>
+  </button>
+
+  <section aria-label="Sign in" class="another-action">
+    Já tem uma conta? <a class="text-link" routerLink="../login">Login</a>
+  </section>
+</form>
+

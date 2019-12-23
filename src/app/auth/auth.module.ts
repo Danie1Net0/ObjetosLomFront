@@ -8,12 +8,14 @@ import { LoginComponent } from './components/login/login.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { SharedModule } from '../shared/shared.module';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     ResetPasswordComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    RegisterComponent
   ],
   imports: [
     CommonModule,
