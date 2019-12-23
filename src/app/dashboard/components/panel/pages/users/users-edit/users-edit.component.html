@@ -1,0 +1,56 @@
+<nb-card [nbSpinner]="loading$ | async" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header>
+    <button routerLink="../../listar" nbButton ghost>
+      <nb-icon icon="corner-up-left-outline" class="button-return"></nb-icon>
+    </button>
+
+    Editar Usuário
+  </nb-card-header>
+
+  <nb-card-body>
+    <nb-alert (close)="onClose()" *ngIf="message$ | async as message" [accent]="message.type" closable>
+      {{ message.content }}
+    </nb-alert>
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="formGroup" aria-labelledby="title">
+      <div class="row">
+        <div class="col-md-12 col-lg-6">
+          <app-input-field [control]="formGroup.get('name')" [cssClass]="verifyValidField('name')" controlName="Nome"
+                           formControlName="name" id="name" label="Nome" placeholder="Nome" [isReadOnly]="true"></app-input-field>
+        </div>
+
+        <div class="col-md-12 col-lg-6">
+          <app-input-field [control]="formGroup.get('lastName')" [cssClass]="verifyValidField('lastName')"
+                           controlName="Sobrenome" formControlName="lastName" id="lastName" label="Sobrenome"
+                           placeholder="Sobrenome" [isReadOnly]="true"></app-input-field>
+        </div>
+      </div>
+
+      <app-input-field [control]="formGroup.get('institution')" [cssClass]="verifyValidField('institution')"
+                       controlName="Instituição de Ensino" formControlName="institution" id="institution"
+                       label="Instituição de Ensino" placeholder="Instituição de Ensino" [isReadOnly]="true"></app-input-field>
+
+      <div class="row">
+        <div class="col-md-12 col-lg-6">
+          <app-input-field [control]="formGroup.get('email')" [cssClass]="verifyValidField('email')" controlName="E-mail"
+                           formControlName="email" id="email" label="E-mail" placeholder="Seu e-mail"
+                           type="email" [isReadOnly]="true"></app-input-field>
+        </div>
+
+        <div class="col-md-12 col-lg-6">
+          <label class="label" for="role">Função:</label>
+          <nb-select id="role" placeholder="Função do Usuário" formControlName="role" [(selected)]="formGroup.get('role').value" fullWidth>
+            <nb-option value="super-admin">Super Administrador</nb-option>
+            <nb-option value="admin">Administrador</nb-option>
+            <nb-option value="client">Usuário Comum</nb-option>
+          </nb-select>
+        </div>
+      </div>
+
+      <button [class.btn-pulse]="formGroup.valid" [disabled]="formGroup.invalid || (loading$ | async)" class="float-right mt-2" nbButton status="success">
+        Atualizar
+      </button>
+    </form>
+
+  </nb-card-body>
+</nb-card>

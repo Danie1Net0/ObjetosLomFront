@@ -2,18 +2,29 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { delay, map, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
+import { TokenService } from './token.service';
+import { User } from '../models/user';
+
 export class CrudService<T> {
 
   protected httpOptions: any;
 
-  constructor(protected httpClient: HttpClient, protected API_URL, protected token) {
-    if (token !== '') {
+  constructor(protected httpClient: HttpClient, protected API_URL, protected tokenService: TokenService) {
+    const token = this.tokenService.getToken();
+
+    if (token !== null) {
+      const user = User.getUser();
+
       this.httpOptions = {
         headers: new HttpHeaders({
           'Content-Type':  'application/json',
           Authorization: `Bearer ${ token.value }`
         })
       };
+
+      if (user !== null) {
+        this.httpOptions.headers = this.httpOptions.headers.set('user_id', user._id);
+      }
     }
   }
 
@@ -21,7 +32,7 @@ export class CrudService<T> {
     return this.httpClient.get<T[]>(this.API_URL, this.httpOptions)
       .pipe(
         delay(500),
-        map((response: any) => response.data)
+        map((response: any) => response.data.docs)
       );
   }
 
@@ -34,7 +45,7 @@ export class CrudService<T> {
   }
 
   public show(id: number): Observable<any> {
-    return this.httpClient.get<T>(`${ this.API_URL }/${id}`, this.httpOptions)
+    return this.httpClient.get<T>(`${ this.API_URL }/${ id }`, this.httpOptions)
       .pipe(
         take(1),
         map((response: any) => response.data)
@@ -43,7 +54,7 @@ export class CrudService<T> {
 
   public update(record: T): Observable<any> {
     // @ts-ignore
-    return this.httpClient.put<T>(`${ this.API_URL }/${ record.id }`, record, this.httpOptions)
+    return this.httpClient.put<T>(`${ this.API_URL }/${ record._id }`, record, this.httpOptions)
       .pipe(
         take(1),
         map((response: any) => response.data)
@@ -52,16 +63,15 @@ export class CrudService<T> {
 
   public save(record: T): Observable<any> {
     // @ts-ignore
-    if (record.id) {
+    if (record._id) {
       return this.update(record);
     }
 
     return this.store(record);
   }
 
-  public destroy(record: T): Observable<any> {
-    // @ts-ignore
-    return this.httpClient.delete(`${ this.API_URL }/${ record.id }`, this.httpOptions).pipe(take(1));
+  public destroy(id: string): Observable<any> {
+    return this.httpClient.delete(`${ this.API_URL }/${ id }`, this.httpOptions).pipe(take(1));
   }
 
 }

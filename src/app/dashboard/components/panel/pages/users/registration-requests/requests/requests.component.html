@@ -1,0 +1,37 @@
+<nb-card size="giant" *ngIf="users$ | async as users; else loading">
+  <nb-card-header>
+    <button routerLink="/dashboard" nbButton ghost>
+      <nb-icon icon="corner-up-left-outline" class="button-return"></nb-icon>
+    </button>
+
+    Solicitações Pendentes
+  </nb-card-header>
+
+  <nb-card-body>
+    <nb-alert class="alert-info" *ngIf="!users.length" accent="info">
+      Não há nenhuma solicitação pendente.
+    </nb-alert>
+
+    <nb-list>
+      <nb-list-item class="d-flex justify-content-between" *ngFor="let user of users">
+        <nb-user [name]="user.name" [title]="user.institution"></nb-user>
+
+        <button [routerLink]="['../solicitacoes', user._id]" nbButton outline status="primary">
+          <nb-icon icon="eye-outline"></nb-icon> Visualizar
+        </button>
+      </nb-list-item>
+    </nb-list>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #loading>
+  <nb-alert class="alert-error" *ngIf="error$ | async; else success" accent="danger">
+    Erro ao carregar usuários. Tente novamente mais tarde.
+  </nb-alert>
+
+  <ng-template #success>
+    <nb-card class="spinner" nbSpinnerSize="giant" [nbSpinner]="true" nbSpinnerStatus="info">
+      <nb-card-body></nb-card-body>
+    </nb-card>
+  </ng-template>
+</ng-template>

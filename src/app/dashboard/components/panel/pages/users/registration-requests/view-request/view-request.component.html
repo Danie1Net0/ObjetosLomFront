@@ -1,0 +1,46 @@
+<nb-card [nbSpinner]="loading$ | async" nbSpinnerStatus="primary" nbSpinnerSize="large">
+  <nb-card-header>
+    <button routerLink="../../solicitacoes" nbButton ghost>
+      <nb-icon icon="corner-up-left-outline" class="button-return"></nb-icon>
+    </button>
+
+    Visualizar Solicitação
+  </nb-card-header>
+
+  <nb-card-body>
+    <nb-alert (close)="onClose()" *ngIf="message$ | async as message" [accent]="message.type" closable>
+      {{ message.content }}
+    </nb-alert>
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="formGroup" aria-labelledby="title">
+      <div class="row">
+        <div class="col-md-12 col-lg-6">
+          <app-input-field [control]="formGroup.get('name')" [cssClass]="verifyValidField('name')" controlName="Nome"
+                           formControlName="name" id="name" label="Nome" placeholder="Nome" [isReadOnly]="true"></app-input-field>
+        </div>
+
+        <div class="col-md-12 col-lg-6">
+          <app-input-field [control]="formGroup.get('lastName')" [cssClass]="verifyValidField('lastName')"
+                           controlName="Sobrenome" formControlName="lastName" id="lastName" label="Sobrenome"
+                           placeholder="Sobrenome" [isReadOnly]="true"></app-input-field>
+        </div>
+      </div>
+
+      <app-input-field [control]="formGroup.get('institution')" [cssClass]="verifyValidField('institution')"
+                       controlName="Instituição de Ensino" formControlName="institution" id="institution"
+                       label="Instituição de Ensino" placeholder="Instituição de Ensino" [isReadOnly]="true"></app-input-field>
+
+      <app-input-field [control]="formGroup.get('email')" [cssClass]="verifyValidField('email')" controlName="E-mail"
+                       formControlName="email" id="email" label="E-mail" placeholder="Seu e-mail"
+                       type="email" [isReadOnly]="true"></app-input-field>
+
+      <button (click)="rejectRequest()" [disabled]="disableButtons" class="float-right mt-2" nbButton status="danger">
+        Rejeitar
+      </button>
+
+      <button (click)="acceptRequest()" [disabled]="disableButtons" class="float-right mt-2 mr-2" nbButton status="success">
+        Aceitar
+      </button>
+    </form>
+  </nb-card-body>
+</nb-card>
