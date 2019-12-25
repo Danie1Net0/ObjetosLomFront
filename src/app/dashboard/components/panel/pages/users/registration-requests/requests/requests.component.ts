@@ -24,9 +24,8 @@ export class RequestsComponent implements OnInit {
   }
 
   private onRefresh(): void {
-    this.users$ = this.usersService.requestIndex({ key: 'active', value: 'false' })
+    this.users$ = this.usersService.index([{ key: 'active', value: false }])
       .pipe(
-        take(1),
         catchError((error: ObservableInput<any>) => {
           this.error$.next(true);
           return empty();

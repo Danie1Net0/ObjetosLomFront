@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { delay, map, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -19,7 +19,8 @@ export class CrudService<T> {
         headers: new HttpHeaders({
           'Content-Type':  'application/json',
           Authorization: `Bearer ${ token.value }`
-        })
+        }),
+        params: new HttpParams()
       };
 
       if (user !== null) {
@@ -28,11 +29,17 @@ export class CrudService<T> {
     }
   }
 
-  public index(): Observable<any> {
+  public index(params: any): Observable<any> {
+    this.httpOptions.params = new HttpParams();
+
+    for (const param of params) {
+      this.httpOptions.params = this.httpOptions.params.set(param.key, param.value);
+    }
+
     return this.httpClient.get<T[]>(this.API_URL, this.httpOptions)
       .pipe(
         delay(500),
-        map((response: any) => response.data.docs)
+        map((response: any) => response.data)
       );
   }
 

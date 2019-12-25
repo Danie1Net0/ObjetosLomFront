@@ -1,37 +1,83 @@
-<nb-card size="giant" *ngIf="users$ | async as users; else loading">
-  <nb-card-header>
-    <button routerLink="/dashboard" nbButton ghost>
-      <nb-icon icon="corner-up-left-outline" class="button-return"></nb-icon>
-    </button>
+<div class="row">
+  <div class="col-md-12 col-lg-3">
+    <nb-card>
+      <nb-card-header class="d-flex justify-content-between">
+        Pesquisar
 
-    Usuários
-  </nb-card-header>
-
-  <nb-card-body>
-    <nb-alert class="alert-info" *ngIf="!users.length" accent="info">
-      Ainda não há nenhum usuário cadastrado.
-    </nb-alert>
-
-    <nb-list>
-      <nb-list-item class="d-flex justify-content-between" *ngFor="let user of users">
-        <nb-user [name]="user.name" [title]="formatRole(user.role)"></nb-user>
-
-        <button [routerLink]="['../editar', user._id]" nbButton outline status="primary">
-          <nb-icon icon="edit-2-outline"></nb-icon> Editar
+        <button class="float-right" size="tiny" (click)="clearSearch()" nbButton outline>
+          Limpar Pesquisa
         </button>
-      </nb-list-item>
-    </nb-list>
-  </nb-card-body>
-</nb-card>
+      </nb-card-header>
 
-<ng-template #loading>
-  <nb-alert class="alert-error" *ngIf="error$ | async; else success" accent="danger">
-    Erro ao carregar usuários. Tente novamente mais tarde.
-  </nb-alert>
+      <nb-card-body>
+        <form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+          <div class="form-control-group form-group pb-0 mb-0">
+            <nb-select fullWidth formControlName="searchFor" [(selected)]="formGroup.get('searchFor').value" class="mr-2" placeholder="Buscar por:">
+              <nb-option value="name">Nome</nb-option>
+              <nb-option value="role">Função</nb-option>
+              <nb-option value="institution">Instituição</nb-option>
+            </nb-select>
+          </div>
 
-  <ng-template #success>
-    <nb-card class="spinner" nbSpinnerSize="giant" [nbSpinner]="true" nbSpinnerStatus="info">
-      <nb-card-body></nb-card-body>
+          <app-input-field [control]="formGroup.get('value')" class="mb-0 pb-0" controlName="Nome"
+                           formControlName="value" id="value" placeholder="Insira sua Busca" *ngIf="formGroup.get('searchFor').value != 'role'; else role"></app-input-field>
+
+          <ng-template #role>
+            <div class="form-control-group form-group mt-3 pt-1">
+              <nb-select fullWidth formControlName="role" placeholder="Função" *ngIf="formGroup.get('searchFor').value == 'role'">
+                <nb-option value="super-admin">Super Admnistrador</nb-option>
+                <nb-option value="admin">Admnistrador</nb-option>
+                <nb-option value="client">Usuário Comum</nb-option>
+              </nb-select>
+            </div>
+          </ng-template>
+
+          <button type="submit" class="float-right" nbButton outline [disabled]="!isFormValid()">
+            <nb-icon icon="search-outline"></nb-icon>
+          </button>
+        </form>
+      </nb-card-body>
     </nb-card>
-  </ng-template>
-</ng-template>
+  </div>
+
+  <div class="col-md-12 col-lg-9">
+    <nb-card size="giant" *ngIf="users$ | async as users; else loading">
+      <nb-card-header>
+        <button routerLink="/dashboard" nbButton ghost>
+          <nb-icon icon="corner-up-left-outline" class="button-return"></nb-icon>
+        </button>
+
+        Usuários
+      </nb-card-header>
+
+      <nb-card-body>
+        <nb-alert class="alert-info" *ngIf="!users.length" accent="info">
+          Nenhum usuário encontrado.
+        </nb-alert>
+
+        <nb-list>
+          <nb-list-item class="d-flex justify-content-between" *ngFor="let user of users">
+            <nb-user [name]="user.name" [title]="formatRole(user.role)"></nb-user>
+
+            <button [routerLink]="['../editar', user._id]" nbButton outline status="primary">
+              <nb-icon icon="edit-2-outline"></nb-icon> Editar
+            </button>
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+
+    <ng-template #loading>
+      <nb-alert class="alert-error" *ngIf="error$ | async; else success" accent="danger">
+        Erro ao carregar usuários. Tente novamente mais tarde.
+      </nb-alert>
+
+      <ng-template #success>
+        <nb-card class="spinner" nbSpinnerSize="giant" [nbSpinner]="true" nbSpinnerStatus="info">
+          <nb-card-body></nb-card-body>
+        </nb-card>
+      </ng-template>
+    </ng-template>
+
+  </div>
+</div>
