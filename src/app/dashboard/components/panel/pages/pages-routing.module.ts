@@ -10,6 +10,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'objetos',
+    loadChildren: () => import('./learning-objects/learning-objects.module').then(module => module.LearningObjectsModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: '',
     loadChildren: () => import('./home-page/home-page.module').then(module => module.HomePageModule),
     canActivate: [AuthGuard]

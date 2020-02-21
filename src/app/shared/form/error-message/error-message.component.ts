@@ -16,9 +16,11 @@ export class ErrorMessageComponent {
   constructor() { }
 
   get errorMessage() {
-    for (const controlName in this.control.errors) {
-      if (this.control.errors.hasOwnProperty(controlName) && (this.control.touched || this.control.dirty)) {
-        return FormValidations.getErrorMessage(this.fieldName, controlName, this.control.errors[controlName]);
+    if (this.control) {
+      for (const controlName in this.control.errors) {
+        if (this.control.errors.hasOwnProperty(controlName) && (this.control.touched || this.control.dirty)) {
+          return FormValidations.getErrorMessage(this.fieldName, controlName, this.control.errors[controlName]);
+        }
       }
     }
 

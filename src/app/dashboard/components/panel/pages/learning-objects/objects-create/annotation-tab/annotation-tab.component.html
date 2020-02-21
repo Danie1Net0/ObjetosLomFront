@@ -1,0 +1,65 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+  <div class="row mt-3">
+    <div class="col-md-12 col-lg-8" formGroupName="entity">
+      <nb-card>
+        <nb-card-header>Entidade</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col">
+              <app-input-field formControlName="givenName" label="Nome" placeholder="Nome"></app-input-field>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="lastName" label="Sobrenome" placeholder="Sobrenome"></app-input-field>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="email" label="E-mail" placeholder="E-mail"
+                               type="email"></app-input-field>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="organization" label="Instituição"
+                               placeholder="Instituição"></app-input-field>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-4">
+      <nb-card>
+        <nb-card-header>Data</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col">
+              <app-input-field [max]="maxDateTime" controlName="Data" formControlName="date" id="date" label="Data"
+                               placeholder="Data" type="datetime-local"></app-input-field>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12" formGroupName="description">
+      <nb-card>
+        <nb-card-header class="card-header-form">Descrição</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col-12">
+              <app-input-field formControlName="language" id="description_language" label="Idioma"
+                               placeholder="Idioma"></app-input-field>
+            </div>
+
+            <div class="col-12">
+              <app-textarea-field formControlName="content" id="description_content" label="Descrição"
+                                  placeholder="Descrição"></app-textarea-field>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</form>

@@ -16,6 +16,7 @@ export class UsersComponent extends BaseForm implements OnInit {
 
   public users$: Observable<User[]>;
   public error$: Subject<boolean>;
+  public searchForValue: string;
   private user: User;
 
   constructor(
@@ -36,6 +37,8 @@ export class UsersComponent extends BaseForm implements OnInit {
     });
 
     this.onRefresh([{ key: 'active', value: true }]);
+
+    this.formGroup.get('searchFor').valueChanges.subscribe(value => this.searchForValue = value);
   }
 
   public submit(): void {

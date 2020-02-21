@@ -1,0 +1,198 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+  <div class="row mt-3">
+    <div class="col-lg-12">
+      <nb-card>
+        <nb-card-header class="card-header-form">Objetivo</nb-card-header>
+        <nb-card-body>
+          <div class="form-control-group form-group">
+            <label class="label" for="purpose">Objetivo:</label><br>
+            <nb-select formControlName="purpose" fullWidth id="purpose" placeholder="Objetivo">
+              <nb-option value="discipline">Disciplina</nb-option>
+              <nb-option value="idea">Ideia</nb-option>
+              <nb-option value="prerequisite">Pré-requisito</nb-option>
+              <nb-option value="educational objective">Objetivo Educacional</nb-option>
+              <nb-option value="accessibility restrictions">Restrições de Acessibilidade</nb-option>
+              <nb-option value="educational level">Nível Educacional</nb-option>
+              <nb-option value="skill level">Nível de Habilidade</nb-option>
+              <nb-option value="security level">Nível de Segurança</nb-option>
+              <nb-option value="competency">Competência</nb-option>
+            </nb-select>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <nb-card>
+        <nb-card-header class="card-header-form">Palavras-chaves</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col">
+              <app-input-field formControlName="keyword" id="keyword" label="Palavra-chave" placeholder="Palavra-chave"></app-input-field>
+            </div>
+          </div>
+
+          <button (click)="addKeyword()" [disabled]="formGroup.get('keyword').invalid" class="float-right" nbButton
+                  size="tiny"
+                  status="primary">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+
+          <table class="table mt-5">
+            <tbody>
+            <tr *ngFor="let keyword of getKeyword(); index as position;">
+              <td>
+                <strong>Palavra-chave:</strong> {{ keyword }}
+
+                <button (click)="removeKeyword(position)" class="float-right" ghost nbButton size="tiny">
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12" formGroupName="description">
+      <nb-card>
+        <nb-card-header class="card-header-form">Descrição</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col-12">
+              <app-input-field formControlName="language" id="description_language" label="Idioma"
+                               placeholder="Idioma"></app-input-field>
+            </div>
+
+            <div class="col-12">
+              <app-textarea-field formControlName="content" id="description_content" label="Descrição"
+                                  placeholder="Descrição"></app-textarea-field>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <nb-card>
+        <nb-card-header>Taxonomia</nb-card-header>
+        <nb-card-body>
+          <span class="form-title">Fonte:</span>
+
+          <div class="form-row mt-2 mb-2" formGroupName="source">
+            <div class="col-4">
+              <app-input-field formControlName="language" id="source_language" label="Idioma" placeholder="Idioma"></app-input-field>
+            </div>
+
+            <div class="col-8">
+              <app-input-field formControlName="content" id="source_content" label="Descrição" placeholder="Descrição"></app-input-field>
+            </div>
+          </div>
+
+          <span class="form-title">Taxon:</span>
+
+          <div class="form-row mt-2" formGroupName="taxon">
+            <div class="col-2">
+              <app-input-field formControlName="id" id="taxon_id" label="ID" placeholder="ID"></app-input-field>
+            </div>
+
+            <div class="col-10" formGroupName="entry">
+              <div class="form-row">
+                <div class="col-6">
+                  <app-input-field formControlName="content" id="entry_content" label="Entrada" placeholder="Entrada"></app-input-field>
+                </div>
+
+                <div class="col-6">
+                  <app-input-field formControlName="language" id="entry_language" label="Idioma" placeholder="Idioma"></app-input-field>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button (click)="addTaxon()" [disabled]="formGroup.get('taxon').invalid" class="float-right"
+                  nbButton size="tiny" status="primary">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+
+          <table class="table mt-5">
+            <tbody>
+              <tr *ngFor="let taxon of getTaxons(); index as position;">
+                <td>
+                  <strong>ID:</strong> {{ taxon.id }}
+                </td>
+                <td>
+                  <strong>Entrada:</strong> {{ taxon.entry.content }}
+                </td>
+                <td>
+                  <strong>Idioma:</strong> {{ taxon.entry.language }}
+
+                  <button (click)="removeTaxon(position)" class="float-right" ghost nbButton size="tiny">
+                    <nb-icon icon="close-outline"></nb-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="form-row">
+            <div class="col">
+              <button (click)="addTaxonPath()" [disabled]="formGroup.get('source').value && !taxons.length" class="float-right" nbButton size="small" status="primary">
+                Adicionar
+              </button>
+            </div>
+          </div>
+
+          <div class="form-row mt-3">
+            <div class="col">
+              <nb-list *ngIf="getTaxonPaths().length">
+                <nb-list-item *ngFor="let taxonPath of getTaxonPaths(); index as position;">
+                  <div class="row">
+                    <div class="col">
+                      <p *ngIf="taxonPath.source.content">
+                        <strong>Fonte:</strong> {{ taxonPath.source.content }}
+                      </p>
+
+                      <p *ngIf="taxonPath.source.language">
+                        <strong>Idioma:</strong> {{ taxonPath.source.language }}
+                      </p>
+                    </div>
+
+                    <div class="col float-left">
+                      <button (click)="removeTaxonPath(position)" class="float-right" ghost nbButton size="tiny">
+                        <nb-icon icon="close-outline"></nb-icon>
+                      </button>
+                    </div>
+                  </div>
+
+                  <table *ngIf="taxonPath.taxon.length" class="table table-bordered mt-5">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Entrada</th>
+                        <th>Idioma</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let taxon of taxonPath.taxon; index as position;">
+                        <td> {{ taxon.id }} </td>
+                        <td> {{ taxon.entry.content }} </td>
+                        <td> {{ taxon.entry.language }} </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </nb-list-item>
+              </nb-list>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</form>

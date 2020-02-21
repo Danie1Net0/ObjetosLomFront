@@ -1,0 +1,179 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+  <div class="row mt-3">
+    <div class="col-md-12 col-lg-6" formGroupName="version">
+      <nb-card>
+        <nb-card-header class="card-header-form">Versão</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col">
+              <app-input-field formControlName="language" id="version_language" label="Idioma"
+                               placeholder="Idioma"></app-input-field>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="content" id="version_content" label="Versão"
+                               placeholder="Versão"></app-input-field>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-6">
+      <nb-card>
+        <nb-card-header class="card-header-form">Status</nb-card-header>
+        <nb-card-body>
+          <div class="form-control-group form-group">
+            <label class="label" for="status">Status:</label><br>
+            <nb-select [(selected)]="statusValue" formControlName="status" fullWidth
+                       id="status" placeholder="Status">
+              <nb-option value="draft">Esboço</nb-option>
+              <nb-option value="final">Finalizado</nb-option>
+              <nb-option value="revised">Revisado</nb-option>
+              <nb-option value="unavailable">Indisponível</nb-option>
+            </nb-select>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <nb-card>
+        <nb-card-header class="card-header-form">Contribuidores</nb-card-header>
+        <nb-card-body>
+          <div class="form-row mb-3" formGroupName="contribute">
+            <div class="col">
+              <label class="label" for="role">Função:</label><br>
+              <nb-select formControlName="role" fullWidth id="role" placeholder="Função">
+                <nb-option value="author">Autor</nb-option>
+                <nb-option value="validator">Validador</nb-option>
+                <nb-option value="unknown">Desconhecido</nb-option>
+                <nb-option value="initiator">Idealizador</nb-option>
+                <nb-option value="terminator">Finalizador</nb-option>
+                <nb-option value="publisher">Publicador</nb-option>
+                <nb-option value="editor">Editor</nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col">
+              <app-input-field [max]="maxDateTime" controlName="Data" formControlName="date" id="date" label="Data"
+                               placeholder="Data" type="datetime-local"></app-input-field>
+            </div>
+          </div>
+
+          <span class="form-title">Entidades:</span>
+
+          <div class="form-row mt-n3" formGroupName="entity">
+            <div class="col">
+              <app-input-field formControlName="givenName" placeholder="Nome"></app-input-field>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="lastName" placeholder="Sobrenome"></app-input-field>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="email" placeholder="E-mail" type="email"></app-input-field>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="organization" placeholder="Instituição"></app-input-field>
+            </div>
+
+            <button (click)="addEntity()" [disabled]="formGroup.get('entity').invalid" class="float-right" nbButton outline
+                    size="tiny" status="primary" id="btn-add-entity">
+              <nb-icon icon="plus-outline"></nb-icon>
+            </button>
+          </div>
+
+          <div class="form-row">
+            <div class="col">
+              <table *ngIf="getEntities().length" class="table table-borderless mt-5">
+                <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Sobrenome</th>
+                  <th>E-mail</th>
+                  <th>Instituição</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let entity of getEntities(); index as position;">
+                  <td> {{ entity.givenName }}</td>
+                  <td> {{ entity.lastName }}</td>
+                  <td> {{ entity.email }}</td>
+                  <td>
+                    {{ entity.organization }}
+
+                    <button (click)="removeEntity(position)" class="float-right" ghost nbButton size="tiny">
+                      <nb-icon icon="close-outline"></nb-icon>
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col">
+              <button (click)="addContribute()" [disabled]="!isFormValid()" class="float-right" nbButton size="small"
+                      status="primary">
+                Adicionar Contribuidor
+              </button>
+            </div>
+          </div>
+
+          <div class="form-row mt-3">
+            <div class="col">
+              <nb-list *ngIf="getContributers().length">
+                <nb-list-item *ngFor="let contribute of getContributers(); index as position;">
+                  <div class="row">
+                    <div class="col">
+                      <p *ngIf="contribute.role">
+                        <strong>Função:</strong>
+                        {{ getRole(contribute.role) }}
+                      </p>
+
+                      <p *ngIf="contribute.date">
+                        <strong>Data:</strong>
+                        {{ getDateTime(contribute.date) }}
+                      </p>
+                    </div>
+
+                    <div class="col float-left">
+                      <button (click)="removeContribute(position)" class="float-right" ghost nbButton size="tiny">
+                        <nb-icon icon="close-outline"></nb-icon>
+                      </button>
+                    </div>
+                  </div>
+
+                  <table *ngIf="contribute.entity.length" class="table table-bordered mt-5">
+                    <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Sobrenome</th>
+                      <th>E-mail</th>
+                      <th>Instituição</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let entity of contribute.entity; index as position;">
+                      <td> {{ entity.givenName }} </td>
+                      <td> {{ entity.lastName }} </td>
+                      <td> {{ entity.email }} </td>
+                      <td> {{ entity.organization }} </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </nb-list-item>
+              </nb-list>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</form>

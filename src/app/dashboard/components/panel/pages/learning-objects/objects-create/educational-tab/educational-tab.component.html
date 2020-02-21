@@ -1,0 +1,348 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+  <div class="row mt-3">
+    <div class="col-md-12 col-lg-4">
+      <nb-card>
+        <nb-card-header class="card-header-form">Tipo de interação</nb-card-header>
+        <nb-card-body>
+          <div class="form-control-group form-group">
+            <label class="label" for="interactivityType">Tipo de interação:</label><br>
+            <nb-select [(selected)]="interactivityTypeValue" formControlName="interactivityType" fullWidth
+                       id="interactivityType" placeholder="Tipo de interação:">
+              <nb-option value="active">Ativo</nb-option>
+              <nb-option value="expositive">Expositivo</nb-option>
+              <nb-option value="mixed">Misto</nb-option>
+            </nb-select>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-4">
+      <nb-card>
+        <nb-card-header class="card-header-form">Densidade Semântica</nb-card-header>
+        <nb-card-body>
+          <div class="form-control-group form-group">
+            <label class="label" for="interactivityLevel">Densidade Semântica:</label><br>
+            <nb-select [(selected)]="semanticDensityValue" formControlName="semanticDensity" fullWidth
+                       id="semanticDensity" placeholder="Densidade Semântica">
+              <nb-option value="very low">Muito Baixo</nb-option>
+              <nb-option value="low">Baixo</nb-option>
+              <nb-option value="medium">Médio</nb-option>
+              <nb-option value="high">Alto</nb-option>
+              <nb-option value="very high">Muito Alto</nb-option>
+            </nb-select>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-4">
+      <nb-card>
+        <nb-card-header class="card-header-form">Nível de interatividade</nb-card-header>
+        <nb-card-body>
+          <div class="form-control-group form-group">
+            <label class="label" for="interactivityLevel">Nível de interatividade:</label><br>
+            <nb-select [(selected)]="interactivityLevelValue" formControlName="interactivityLevel" fullWidth
+                       id="interactivityLevel" placeholder="Nível de interatividade">
+              <nb-option value="very low">Muito Baixo</nb-option>
+              <nb-option value="low">Baixo</nb-option>
+              <nb-option value="medium">Médio</nb-option>
+              <nb-option value="high">Alto</nb-option>
+              <nb-option value="very high">Muito Alto</nb-option>
+            </nb-select>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-lg-6">
+      <nb-card>
+        <nb-card-header class="card-header-form">Dificuldade</nb-card-header>
+        <nb-card-body>
+          <div class="form-control-group form-group">
+            <label class="label" for="interactivityType">Dificuldade:</label><br>
+            <nb-select [(selected)]="difficultyValue" formControlName="difficulty" fullWidth id="difficulty"
+                       placeholder="Dificuldade">
+              <nb-option value="very easy">Muito Fácil</nb-option>
+              <nb-option value="very">Fácil</nb-option>
+              <nb-option value="medium">Médio</nb-option>
+              <nb-option value="difficult">Difícil</nb-option>
+              <nb-option value="very difficult">Difícil</nb-option>
+            </nb-select>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-6" formGroupName="typicalLearningTime">
+      <nb-card>
+        <nb-card-header class="card-header-form">Tempo de aprendizagem típico</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col">
+              <app-input-field formControlName="days" id="days" label="Dias" min="0" placeholder="Dias"
+                               type="number"></app-input-field>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="months" id="months" label="Meses" min="0" placeholder="Meses"
+                               type="number"></app-input-field>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="years" id="years" label="Anos" min="0" placeholder="Anos"
+                               type="number"></app-input-field>
+            </div>
+
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-lg-4">
+      <nb-card>
+        <nb-card-header class="card-header-form">Tipos de recurso de aprendizagem</nb-card-header>
+        <nb-card-body>
+          <div class="form-control-group form-group">
+            <label class="label" for="learningResourceType">Tipos de recurso de aprendizagem:</label><br>
+            <nb-select formControlName="learningResourceType" fullWidth id="learningResourceType"
+                       placeholder="Tipos de recurso de aprendizagem">
+              <nb-option value="exercice">Exercício</nb-option>
+              <nb-option value="simulation">Simulação</nb-option>
+              <nb-option value="questionnaire">Questionário</nb-option>
+              <nb-option value="diagram">Diagrama</nb-option>
+              <nb-option value="figure">Figura</nb-option>
+              <nb-option value="graph">Gráfico</nb-option>
+              <nb-option value="index">Índice</nb-option>
+              <nb-option value="slide">Slide</nb-option>
+              <nb-option value="table">Tabela</nb-option>
+              <nb-option value="narrative text">Texto Narrativo</nb-option>
+              <nb-option value="exam">Exame</nb-option>
+              <nb-option value="experiment">Experiência</nb-option>
+              <nb-option value="problem statement">Declaração de Problema</nb-option>
+              <nb-option value="self assessment">Auto-avaliação</nb-option>
+              <nb-option value="lecture">Leitura</nb-option>
+            </nb-select>
+          </div>
+
+          <button (click)="addLearningResourceType()"
+                  [disabled]="formGroup.get('learningResourceType').invalid || getLearningResourceTypes().includes(formGroup.get('learningResourceType').value)"
+                  class="float-right mb-3" nbButton size="tiny" status="primary">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+
+          <table class="table">
+            <tbody>
+            <tr *ngFor="let learningResourceType of getLearningResourceTypes(); index as position;">
+              <td>
+                <strong>Recurso:</strong> {{ getLearningResourceType(learningResourceType) }}
+
+                <button (click)="removeLearningResourceType(position)" class="float-right" ghost nbButton size="tiny">
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-4">
+      <nb-card>
+        <nb-card-header class="card-header-form">Funções pretendidas</nb-card-header>
+        <nb-card-body>
+          <div class="form-control-group form-group">
+            <label class="label" for="learningResourceType">Funções pretendidas:</label><br>
+            <nb-select formControlName="intendedEndUserRole" fullWidth id="intendedEndUserRole"
+                       placeholder="Funções pretendidas">
+              <nb-option value="author">Autor</nb-option>
+              <nb-option value="teacher">Professor</nb-option>
+              <nb-option value="learner">Aluno</nb-option>
+              <nb-option value="manager">Gerente</nb-option>
+            </nb-select>
+          </div>
+
+          <button (click)="addIntendedEndUserRole()"
+                  [disabled]="formGroup.get('intendedEndUserRole').invalid || getIntendedEndUserRoles().includes(formGroup.get('intendedEndUserRole').value)"
+                  class="float-right mb-3" nbButton size="tiny" status="primary">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+
+          <table class="table">
+            <tbody>
+            <tr *ngFor="let intendedEndUserRole of getIntendedEndUserRoles(); index as position;">
+              <td>
+                <strong>Função:</strong> {{ getIntendedEndUserRole(intendedEndUserRole) }}
+
+                <button (click)="removeIntendedEndUserRole(position)" class="float-right" ghost nbButton size="tiny">
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-4">
+      <nb-card>
+        <nb-card-header class="card-header-form">Contextos</nb-card-header>
+        <nb-card-body>
+          <div class="form-control-group form-group">
+            <label class="label" for="context">Contextos:</label><br>
+            <nb-select formControlName="context" fullWidth id="context" placeholder="Contextos">
+              <nb-option value="school">Escolar</nb-option>
+              <nb-option value="higher education">Ensino Superior</nb-option>
+              <nb-option value="training">Treinamento</nb-option>
+              <nb-option value="other">Outros</nb-option>
+            </nb-select>
+          </div>
+
+          <button (click)="addContext()"
+                  [disabled]="formGroup.get('context').invalid || getContexts().includes(formGroup.get('context').value)"
+                  class="float-right mb-3" nbButton size="tiny" status="primary">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+
+          <table class="table">
+            <tbody>
+            <tr *ngFor="let context of getContexts(); index as position;">
+              <td>
+                <strong>Contexto:</strong> {{ getContext(context) }}
+
+                <button (click)="removeContext(position)" class="float-right" ghost nbButton size="tiny">
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-lg-6">
+      <nb-card>
+        <nb-card-header class="card-header-form">Idiomas</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col">
+              <app-input-field formControlName="language" id="language" label="Idioma"
+                               placeholder="Idioma"></app-input-field>
+            </div>
+          </div>
+
+          <button (click)="addLanguage()" [disabled]="formGroup.get('language').invalid" class="float-right" nbButton
+                  size="tiny" status="primary">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+
+          <table class="table mt-5">
+            <tbody>
+            <tr *ngFor="let language of getLanguages(); index as position;">
+              <td>
+                <strong>Idioma:</strong> {{ language }}
+                <button (click)="removeLanguage(position)" class="float-right" ghost nbButton size="tiny">
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-6" formGroupName="typicalAgeRange">
+      <nb-card>
+        <nb-card-header class="card-header-form">Faixa etária</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col">
+              <app-input-field formControlName="language" id="typicalAgeRange_language" label="Idioma"
+                               placeholder="Idioma"></app-input-field>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="content" id="typicalAgeRange_content" label="Faixa etária"
+                               placeholder="Faixa etária"></app-input-field>
+            </div>
+          </div>
+
+          <button (click)="addTypicalAgeRange()" [disabled]="formGroup.get('typicalAgeRange').invalid"
+                  class="float-right" nbButton size="tiny" status="primary">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+
+          <table class="table mt-5">
+            <tbody>
+            <tr *ngFor="let typicalAgeRange of getTypicalAgeRanges(); index as position;">
+              <td>
+                <strong>Idioma:</strong> {{ typicalAgeRange.language }}
+              </td>
+              <td>
+                <strong>Faixa etária:</strong> {{ typicalAgeRange.content }}
+
+                <button (click)="removeTypicalAgeRange(position)" class="float-right" ghost nbButton size="tiny">
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12" formGroupName="description">
+      <nb-card>
+        <nb-card-header class="card-header-form">Descrição</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col-12">
+              <app-input-field formControlName="language" id="description_language" label="Idioma"
+                               placeholder="Idioma"></app-input-field>
+            </div>
+
+            <div class="col-12">
+              <app-textarea-field formControlName="content" id="description_content" label="Descrição"
+                                  placeholder="Descrição"></app-textarea-field>
+            </div>
+          </div>
+
+          <button (click)="addDescription()" [disabled]="formGroup.get('description').invalid" class="float-right"
+                  nbButton size="tiny" status="primary">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+
+          <table class="table mt-5">
+            <tbody>
+            <tr *ngFor="let description of getDescriptions(); index as position;">
+              <td>
+                <strong>Idioma:</strong> {{ description.language }}
+              </td>
+              <td>
+                <strong>Descrição:</strong> {{ description.content }}
+
+                <button (click)="removeDescription(position)" class="float-right" ghost nbButton size="tiny">
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</form>

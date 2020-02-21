@@ -38,6 +38,11 @@ export const MENU_ITEMS_SUPER_ADMIN: NbMenuItem[] = [
         title: 'Solicitações Pendentes',
         link: '',
         icon: 'alert-circle',
+      },
+      {
+        title: 'Novo Objeto',
+        link: 'objetos/novo',
+        icon: 'plus-circle'
       }
     ]
   }

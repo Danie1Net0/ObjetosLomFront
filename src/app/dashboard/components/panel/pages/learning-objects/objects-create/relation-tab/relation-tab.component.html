@@ -1,0 +1,97 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+  <div class="row mt-3">
+    <div class="col-lg-12">
+      <nb-card>
+        <nb-card-header class="card-header-form">Tipo</nb-card-header>
+        <nb-card-body>
+          <app-input-field formControlName="kind" id="kind" label="Tipo" placeholder="Tipo"></app-input-field>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <nb-card>
+        <nb-card-header class="card-header-form">Recursos</nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-md-12 col-lg-6" formGroupName="identifier">
+              <span class="form-title">Identificadores:</span>
+
+              <div class="form-row mt-3">
+                <div class="col-12">
+                  <app-input-field formControlName="catalog" id="identifier_catalog" label="Catálogo"
+                                   placeholder="Catálogo"></app-input-field>
+                </div>
+
+                <div class="col-12">
+                  <app-input-field formControlName="entry" id="identifier_entry" label="Entrada"
+                                   placeholder="Entrada"></app-input-field>
+                </div>
+              </div>
+
+              <button (click)="addIdentifier()" [disabled]="formGroup.get('identifier').invalid" class="float-right"
+                      nbButton size="tiny"
+                      status="primary">
+                <nb-icon icon="plus-outline"></nb-icon>
+              </button>
+
+              <table class="table mt-5">
+                <tbody>
+                  <tr *ngFor="let identifier of getIdentifiers(); index as position;">
+                    <td><strong>Catálogo:</strong> {{ identifier.catalog }}</td>
+                    <td>
+                      <strong>Entrada:</strong> {{ identifier.entry }}
+                      <button (click)="removeIdentifier(position)" class="float-right" ghost nbButton size="tiny">
+                        <nb-icon icon="close-outline"></nb-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="col-md-12 col-lg-6" formGroupName="description">
+              <div class="form-row">
+                <span class="form-title mb-3">Descrições:</span>
+
+                <div class="col-12">
+                  <app-input-field formControlName="language" id="description_language" label="Idioma"
+                                   placeholder="Idioma"></app-input-field>
+                </div>
+
+                <div class="col-12">
+                  <app-textarea-field formControlName="content" id="description_content" label="Descrição"
+                                      placeholder="Descrição"></app-textarea-field>
+                </div>
+              </div>
+
+              <button (click)="addDescription()" [disabled]="formGroup.get('description').invalid" class="float-right"
+                      nbButton size="tiny" status="primary">
+                <nb-icon icon="plus-outline"></nb-icon>
+              </button>
+
+              <table class="table mt-5">
+                <tbody>
+                  <tr *ngFor="let description of getDescriptions(); index as position;">
+                    <td>
+                      <strong>Idioma:</strong> {{ description.language }}
+                    </td>
+                    <td>
+                      <strong>Descrição:</strong> {{ description.content }}
+
+                      <button (click)="removeDescription(position)" class="float-right" ghost nbButton size="tiny">
+                        <nb-icon icon="close-outline"></nb-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</form>

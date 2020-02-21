@@ -1,0 +1,55 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+  <div class="row mt-3">
+    <div class="col-md-12 col-lg-6">
+      <nb-card>
+        <nb-card-header class="card-header-form">Custo</nb-card-header>
+        <nb-card-body>
+          <div class="form-control-group form-group">
+            <label class="label" for="cost">Custo:</label><br>
+            <nb-select [(selected)]="costValue" formControlName="cost" fullWidth id="cost" placeholder="Custo:">
+              <nb-option value="yes">Sim</nb-option>
+              <nb-option value="no">Não</nb-option>
+            </nb-select>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-6">
+      <nb-card>
+        <nb-card-header class="card-header-form">Copyright e outras restrições</nb-card-header>
+        <nb-card-body>
+          <div class="form-control-group form-group">
+            <label class="label" for="copyAndOtherRestrictions">Copyright e outras restrições:</label><br>
+            <nb-select [(selected)]="copyAndOtherRestrictionsValue" formControlName="copyAndOtherRestrictions" fullWidth
+                       id="copyAndOtherRestrictions" placeholder="Copyright e outras restrições:">
+              <nb-option value="yes">Sim</nb-option>
+              <nb-option value="no">Não</nb-option>
+            </nb-select>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12" formGroupName="description">
+      <nb-card>
+        <nb-card-header class="card-header-form">Descrição</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col-12">
+              <app-input-field formControlName="language" id="description_language" label="Idioma"
+                               placeholder="Idioma"></app-input-field>
+            </div>
+
+            <div class="col-12">
+              <app-textarea-field formControlName="content" id="description_content" label="Descrição"
+                                  placeholder="Descrição"></app-textarea-field>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</form>

@@ -39,7 +39,7 @@
 
         <div class="col-md-12 col-lg-6">
           <label class="label" for="role">Função:</label>
-          <nb-select id="role" placeholder="Função do Usuário" formControlName="role" [(selected)]="formGroup.get('role').value" fullWidth>
+          <nb-select id="role" placeholder="Função do Usuário" formControlName="role" [(selected)]="roleValue" fullWidth>
             <nb-option value="super-admin">Super Administrador</nb-option>
             <nb-option value="admin">Administrador</nb-option>
             <nb-option value="client">Usuário Comum</nb-option>

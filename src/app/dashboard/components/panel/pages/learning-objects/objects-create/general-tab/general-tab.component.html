@@ -1,0 +1,247 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+  <div class="row mt-3">
+    <div class="col-md-12 col-lg-4" formGroupName="title">
+      <nb-card>
+        <nb-card-header class="card-header-form">Título</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col">
+              <app-input-field formControlName="language" id="title_language" label="Idioma" placeholder="Idioma"></app-input-field>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="content" id="title_content" label="Título" placeholder="Título"></app-input-field>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-4">
+      <nb-card>
+        <nb-card-header class="card-header-form">Estrutura</nb-card-header>
+        <nb-card-body>
+          <div class="form-control-group form-group">
+            <label class="label" for="structure">Função:</label><br>
+            <nb-select [(selected)]="structureValue" formControlName="structure" fullWidth id="structure" placeholder="Estrutura">
+              <nb-option value="atomic">Atômica</nb-option>
+              <nb-option value="collection">Coleção</nb-option>
+              <nb-option value="networked">Em Rede</nb-option>
+              <nb-option value="hierarchical">Hierárquica</nb-option>
+              <nb-option value="linear">Linear</nb-option>
+            </nb-select>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-4">
+      <nb-card>
+        <nb-card-header class="card-header-form">Nível de agregação</nb-card-header>
+        <nb-card-body>
+          <div class="form-control-group form-group">
+            <label class="label" for="aggregationLevel">Nível de agregação:</label><br>
+            <nb-select [(selected)]="aggregationLevelValue" formControlName="aggregationLevel" fullWidth id="aggregationLevel" placeholder="Nível de agregação">
+              <nb-option value="1">1</nb-option>
+              <nb-option value="2">2</nb-option>
+              <nb-option value="3">3</nb-option>
+              <nb-option value="4">4</nb-option>
+            </nb-select>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-lg-4" formGroupName="identifier">
+      <nb-card>
+        <nb-card-header class="card-header-form">Identificadores</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col">
+              <app-input-field formControlName="catalog" id="identifier_catalog" label="Catálogo"
+                               placeholder="Catálogo"></app-input-field>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="entry" id="identifier_entry" label="Entrada"
+                               placeholder="Entrada"></app-input-field>
+            </div>
+          </div>
+
+          <button (click)="addIdentifier()" [disabled]="formGroup.get('identifier').invalid" class="float-right"
+                  nbButton size="tiny"
+                  status="primary">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+
+          <table class="table mt-5">
+            <tbody>
+            <tr *ngFor="let identifier of getIdentifiers(); index as position;">
+              <td><strong>Catálogo:</strong> {{ identifier.catalog }}</td>
+              <td>
+                <strong>Entrada:</strong> {{ identifier.entry }}
+                <button (click)="removeIdentifier(position)" class="float-right" ghost nbButton size="tiny">
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-4" formGroupName="keyword">
+      <nb-card>
+        <nb-card-header class="card-header-form">Palavras-chaves</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col">
+              <app-input-field formControlName="language" id="keyword_language" label="Idioma"
+                               placeholder="Idioma"></app-input-field>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="content" id="keyword_content" label="Palavra-chave"
+                               placeholder="Palavra-chave"></app-input-field>
+            </div>
+          </div>
+
+          <button (click)="addKeyword()" [disabled]="formGroup.get('keyword').invalid" class="float-right" nbButton
+                  size="tiny"
+                  status="primary">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+
+          <table class="table mt-5">
+            <tbody>
+            <tr *ngFor="let keyword of getKeyword(); index as position;">
+              <td>
+                <strong>Idioma:</strong> {{ keyword.language }}
+              </td>
+              <td>
+                <strong>Palavra-chave:</strong> {{ keyword.content }}
+                <button (click)="removeKeyword(position)" class="float-right" ghost nbButton size="tiny">
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-4" formGroupName="coverage">
+      <nb-card>
+        <nb-card-header class="card-header-form">Abrangências</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col">
+              <app-input-field formControlName="language" id="coverage_language" label="Idioma"
+                               placeholder="Idioma"></app-input-field>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="content" id="coverage_content" label="Descrição"
+                               placeholder="Descrição"></app-input-field>
+            </div>
+          </div>
+
+          <button (click)="addCoverage()" [disabled]="formGroup.get('coverage').invalid" class="float-right" nbButton
+                  size="tiny"
+                  status="primary">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+
+          <table class="table mt-5">
+            <tbody>
+            <tr *ngFor="let coverage of getCoverages(); index as position;">
+              <td>
+                <strong>Idioma:</strong> {{ coverage.language }}
+              </td>
+              <td>
+                <strong>Abrangência:</strong> {{ coverage.content }}
+                <button (click)="removeCoverage(position)" class="float-right" ghost nbButton size="tiny">
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-lg-6" formGroupName="description">
+      <nb-card>
+        <nb-card-header class="card-header-form">Palavras-chaves</nb-card-header>
+        <nb-card-body>
+          <app-input-field formControlName="language" id="description_language" label="Idioma"
+                           placeholder="Idioma"></app-input-field>
+
+          <app-textarea-field formControlName="content" id="description_content" label="Descrição"
+                              placeholder="Descrição"></app-textarea-field>
+
+          <button (click)="addDescription()" [disabled]="formGroup.get('description').invalid" class="float-right"
+                  nbButton size="tiny"
+                  status="primary">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+
+          <table class="table mt-5">
+            <tbody>
+            <tr *ngFor="let description of getDescriptions(); index as position;">
+              <td>
+                <strong>Idioma:</strong> {{ description.language }}
+              </td>
+              <td>
+                <strong>Descrição:</strong> {{ description.content }}
+                <button (click)="removeDescription(position)" class="float-right" ghost nbButton size="tiny">
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-6">
+      <nb-card>
+        <nb-card-header class="card-header-form">Idiomas</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col">
+              <app-input-field formControlName="language" id="language" label="Idioma"
+                               placeholder="Idioma"></app-input-field>
+            </div>
+          </div>
+
+          <button (click)="addLanguage()" [disabled]="formGroup.get('language').invalid" class="float-right" nbButton
+                  size="tiny" status="primary">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+
+          <table class="table mt-5">
+            <tbody>
+            <tr *ngFor="let language of getLanguages(); index as position;">
+              <td>
+                <strong>Idioma:</strong> {{ language }}
+                <button (click)="removeLanguage(position)" class="float-right" ghost nbButton size="tiny">
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</form>

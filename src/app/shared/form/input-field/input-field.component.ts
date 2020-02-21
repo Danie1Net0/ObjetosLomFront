@@ -26,20 +26,20 @@ export class InputFieldComponent implements ControlValueAccessor {
   @Input() shape: string;
   @Input() status: string;
   @Input() fieldSize: string;
-  @Input() min: number;
-  @Input() max: number;
+  @Input() min: any;
+  @Input() max: any;
 
-  private _innerValue: any;
+  private privateInnerValue: any;
 
   get innerValue(): any {
-    return this._innerValue;
+    return this.privateInnerValue;
     this.min = null;
     this.max = null;
   }
 
   set innerValue(value: any) {
-    if (value !== this._innerValue){
-      this._innerValue = value;
+    if (value !== this.privateInnerValue) {
+      this.privateInnerValue = value;
       this.onChangeCallback(value);
     }
   }

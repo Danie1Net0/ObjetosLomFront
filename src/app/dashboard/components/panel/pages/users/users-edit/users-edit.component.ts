@@ -17,6 +17,7 @@ export class UsersEditComponent extends BaseForm implements OnInit {
 
   public message$: Subject<object> = new Subject<object>();
   public loading$: Subject<boolean> = new Subject<boolean>();
+  public roleValue: string;
   private user: User;
   private originalRole: string;
 
@@ -40,6 +41,8 @@ export class UsersEditComponent extends BaseForm implements OnInit {
       institution: [this.user.institution],
       role: [this.user.role, [Validators.required]]
     });
+
+    this.formGroup.get('role').valueChanges.subscribe(value => this.roleValue = value);
   }
 
   public submit(): void {

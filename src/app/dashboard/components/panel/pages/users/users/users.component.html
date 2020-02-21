@@ -12,7 +12,7 @@
       <nb-card-body>
         <form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
           <div class="form-control-group form-group pb-0 mb-0">
-            <nb-select fullWidth formControlName="searchFor" [(selected)]="formGroup.get('searchFor').value" class="mr-2" placeholder="Buscar por:">
+            <nb-select fullWidth formControlName="searchFor" [(selected)]="searchForValue" class="mr-2" placeholder="Buscar por:">
               <nb-option value="name">Nome</nb-option>
               <nb-option value="role">Função</nb-option>
               <nb-option value="institution">Instituição</nb-option>

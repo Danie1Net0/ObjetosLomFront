@@ -1,0 +1,17 @@
+<nb-card>
+  <nb-card-header>
+    <button ghost nbButton routerLink="../listar">
+      <nb-icon class="button-return" icon="corner-up-left-outline"></nb-icon>
+    </button>
+
+    Cadastrar Objeto de Aprendizagem
+  </nb-card-header>
+
+  <nb-card-body>
+    <nb-route-tabset [tabs]="tabs" fullWidth></nb-route-tabset>
+
+    <button (click)="save()" class="float-right" nbButton>
+      Salvar
+    </button>
+  </nb-card-body>
+</nb-card>

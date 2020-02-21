@@ -1,0 +1,244 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="formGroup">
+  <div class="row mt-3">
+    <div class="col-md-12 col-lg-6">
+      <nb-card>
+        <nb-card-header class="card-header-form">Tamanho</nb-card-header>
+        <nb-card-body>
+          <app-input-field formControlName="size" id="size" label="Tamanho" min="1" placeholder="Tamanho"
+                           type="number"></app-input-field>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-6">
+      <nb-card>
+        <nb-card-header class="card-header-form">Duração</nb-card-header>
+        <nb-card-body>
+          <app-input-field [max]="maxDateTime" formControlName="duration" id="duration" label="Duração"
+                           placeholder="Duração" type="datetime-local"></app-input-field>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-lg-6" formGroupName="installationRemarks">
+      <nb-card>
+        <nb-card-header class="card-header-form">Observações de Instalação</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col-12">
+              <app-input-field formControlName="language" id="remark_language" label="Idioma"
+                               placeholder="Idioma"></app-input-field>
+            </div>
+
+            <div class="col-12">
+              <app-textarea-field formControlName="content" id="remark_content" label="Descrição"
+                                  placeholder="Descrição"></app-textarea-field>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-6" formGroupName="otherPlatformRequeriments">
+      <nb-card>
+        <nb-card-header class="card-header-form">Requisitos de Plataforma</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col-12">
+              <app-input-field formControlName="language" id="requeriment_language" label="Idioma"
+                               placeholder="Idioma"></app-input-field>
+            </div>
+
+            <div class="col-21">
+              <app-textarea-field formControlName="content" id="requeriment_content" label="Descrição"
+                                  placeholder="Descrição"></app-textarea-field>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 col-lg-6">
+      <nb-card>
+        <nb-card-header class="card-header-form">Formatos</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col">
+              <app-input-field formControlName="format" id="format" label="Formato"
+                               placeholder="Formato"></app-input-field>
+            </div>
+          </div>
+
+          <button (click)="addFormat()" [disabled]="formGroup.get('format').invalid" class="float-right" nbButton
+                  size="tiny" status="primary">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+
+          <table class="table mt-5">
+            <tbody>
+            <tr *ngFor="let format of getFormats(); index as position;">
+              <td>
+                <strong>Formato:</strong> {{ format }}
+                <button (click)="removeFormat(position)" class="float-right" ghost nbButton size="tiny">
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-12 col-lg-6">
+      <nb-card>
+        <nb-card-header class="card-header-form">Localizações</nb-card-header>
+        <nb-card-body>
+          <div class="form-row">
+            <div class="col">
+              <app-input-field formControlName="location" id="location" label="Localização"
+                               placeholder="Localização"></app-input-field>
+            </div>
+          </div>
+
+          <button (click)="addLocation()" [disabled]="formGroup.get('location').invalid" class="float-right" nbButton
+                  size="tiny" status="primary">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+
+          <table class="table mt-5">
+            <tbody>
+            <tr *ngFor="let location of getLocations(); index as position;">
+              <td>
+                <strong>Localização:</strong> {{ location }}
+                <button (click)="removeLocation(position)" class="float-right" ghost nbButton size="tiny">
+                  <nb-icon icon="close-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <nb-card>
+        <nb-card-header>Requisitos</nb-card-header>
+        <nb-card-body>
+          <span class="form-title">Composições:</span>
+
+          <div class="form-row" formGroupName="orComposite">
+            <div class="col">
+              <div class="form-control-group form-group">
+                <nb-select formControlName="type" fullWidth id="type" placeholder="Tipo" size="medium">
+                  <nb-option value="operating-system">Sistema Operacional</nb-option>
+                  <nb-option value="browser">Navegador Web</nb-option>
+                </nb-select>
+              </div>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="name" placeholder="Nome"></app-input-field>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="minimumVersion" placeholder="Versão Mínima"
+                               type="number"></app-input-field>
+            </div>
+
+            <div class="col">
+              <app-input-field formControlName="maximumVersion" placeholder="Versão Máxima"
+                               type="number"></app-input-field>
+            </div>
+
+            <button (click)="addComposite()" [disabled]="formGroup.get('orComposite').invalid" class="float-right"
+                    id="btn-add-composite" nbButton
+                    outline size="tiny" status="primary">
+              <nb-icon icon="plus-outline"></nb-icon>
+            </button>
+          </div>
+
+          <div class="form-row">
+            <div class="col">
+              <table *ngIf="getCompositions().length" class="table table-borderless mt-5">
+                <thead>
+                <tr>
+                  <th>Tipo</th>
+                  <th>Nome</th>
+                  <th>Versão Mínima</th>
+                  <th>Versão Máxima</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let composite of getCompositions(); index as position;">
+                  <td> {{ getCompositeType(composite.type) }}</td>
+                  <td> {{ composite.name }}</td>
+                  <td> {{ composite.minimumVersion }}</td>
+                  <td>
+                    {{ composite.maximumVersion }}
+
+                    <button (click)="removeComposite(position)" class="float-right" ghost nbButton size="tiny">
+                      <nb-icon icon="close-outline"></nb-icon>
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col">
+              <button (click)="addRequirement()" [disabled]="!compositions.length" class="float-right" nbButton
+                      size="small"
+                      status="primary">
+                Adicionar Requisito
+              </button>
+            </div>
+          </div>
+
+          <div class="form-row mt-3">
+            <div class="col">
+              <nb-list *ngIf="getRequirements().length">
+                <nb-list-item *ngFor="let requirement of getRequirements(); index as position;">
+
+                  <table *ngIf="requirement.length" class="table table-bordered mt-5">
+                    <thead>
+                    <tr>
+                      <th>Tipo</th>
+                      <th>Nome</th>
+                      <th>Versão Mínima</th>
+                      <th>
+                        Versão Máxima
+
+                        <button (click)="removeRequirement(position)" class="float-right" ghost nbButton size="tiny">
+                          <nb-icon icon="close-outline"></nb-icon>
+                        </button>
+                      </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let composite of requirement; index as position;">
+                      <td> {{ getCompositeType(composite.type) }}</td>
+                      <td> {{ composite.name }}</td>
+                      <td> {{ composite.minimumVersion }} </td>
+                      <td> {{ composite.maximumVersion }} </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </nb-list-item>
+              </nb-list>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</form>
